@@ -1,16 +1,30 @@
+import React from "react"
 import { useLocalStorage } from "../hooks/useLocalStorage";
+
 function Form() {
+  const [name, setName] = useLocalStorage("name", "")
+
+  function handleNameChange(e) {
+    setName(e.target.value)
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+  }
 
     return (
       <>
-        <form style={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="name">Name:</label>
-            <input type="text" data-testid={"name"} />
-            <label htmlFor="service">Service Number:</label>
-            <input type="text" data-testid={"service"} />
-
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="name-input">Name:</label>
+            <input
+              id="name-input"
+              data-testid="name"
+              type="text"
+              value={name || ""}
+              onChange={handleNameChange}
+            />
+            <button type="submit">Submit</button>
         </form>
-        <h4>{name ? `Welcome, ${name}!` : "Enter your name"}</h4>
       </>
     );
 }
